@@ -168,7 +168,7 @@ func (d *DockerDiscovery) refresh(ctx context.Context) ([]*targetgroup.Group, er
 		return nil, fmt.Errorf("error while listing containers: %w", err)
 	}
 
-	networkLabels, err := d.getNetworksLabels(ctx)
+	networkLabels, err := getNetworksLabels(ctx, d.client, dockerLabel)
 	if err != nil {
 		return nil, fmt.Errorf("error while computing network labels: %w", err)
 	}
@@ -220,27 +220,4 @@ func (d *DockerDiscovery) refresh(ctx context.Context) ([]*targetgroup.Group, er
 	}
 
 	return []*targetgroup.Group{tg}, nil
-}
-
-func (d *DockerDiscovery) getNetworksLabels(ctx context.Context) (map[string]map[string]string, error) {
-	networks, err := d.client.NetworkList(ctx, types.NetworkListOptions{})
-	if err != nil {
-		return nil, err
-	}
-	labels := make(map[string]map[string]string, len(networks))
-	for _, network := range networks {
-		labels[network.ID] = map[string]string{
-			dockerLabelNetworkID:       network.ID,
-			dockerLabelNetworkName:     network.Name,
-			dockerLabelNetworkScope:    network.Scope,
-			dockerLabelNetworkInternal: fmt.Sprintf("%t", network.Internal),
-			dockerLabelNetworkIngress:  fmt.Sprintf("%t", network.Ingress),
-		}
-		for k, v := range network.Labels {
-			ln := strutil.SanitizeLabelName(k)
-			labels[network.ID][swarmLabelNetworkLabelPrefix+ln] = v
-		}
-	}
-
-	return labels, nil
 }
