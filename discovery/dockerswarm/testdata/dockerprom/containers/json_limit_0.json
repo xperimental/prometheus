@@ -1,0 +1,48 @@
+[
+  {
+    "Id": "8bfd9b9a50425368797b3de45835fe5b8e21f479a2b90a847fdf265c0af9395a",
+    "Names": [
+      "/dockersd_node_1"
+    ],
+    "Image": "prom/node-exporter:v1.1.2",
+    "ImageID": "sha256:c19ae228f0699185488b6a1c0debb9c6b79672181356ad455c9a7924a41a01bb",
+    "Command": "/bin/node_exporter",
+    "Created": 1615727643,
+    "Ports": [
+      {
+        "PrivatePort": 9100,
+        "Type": "tcp"
+      }
+    ],
+    "Labels": {
+      "maintainer": "The Prometheus Authors <prometheus-developers@googlegroups.com>",
+      "prometheus.io/port": "9100",
+      "prometheus.io/scrape": "yes"
+    },
+    "State": "running",
+    "Status": "Up 29 seconds",
+    "HostConfig": {
+      "NetworkMode": "dockersd_default"
+    },
+    "NetworkSettings": {
+      "Networks": {
+        "dockersd_default": {
+          "IPAMConfig": null,
+          "Links": null,
+          "Aliases": null,
+          "NetworkID": "0337a98eda22b75e0741fb719edc289fbfe2af0f737292dfadb08b90b49d229f",
+          "EndpointID": "69573538e2089f93a6a6f2eec5bd94d3a68d4852ea5892a52acbce331b73d110",
+          "Gateway": "172.22.0.1",
+          "IPAddress": "172.22.0.2",
+          "IPPrefixLen": 16,
+          "IPv6Gateway": "",
+          "GlobalIPv6Address": "",
+          "GlobalIPv6PrefixLen": 0,
+          "MacAddress": "02:42:ac:16:00:02",
+          "DriverOpts": null
+        }
+      }
+    },
+    "Mounts": []
+  }
+]
