@@ -1,3 +1,16 @@
+// Copyright 2021 The Prometheus Authors
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package dockerswarm
 
 import (
@@ -29,18 +42,13 @@ const (
 	dockerLabelContainerNetworkMode = dockerLabelContainerPrefix + "network_mode"
 	dockerLabelContainerLabelPrefix = dockerLabelContainerPrefix + "label_"
 	dockerLabelNetworkPrefix        = dockerLabel + "network_"
-	dockerLabelNetworkID            = dockerLabelNetworkPrefix + "id"
-	dockerLabelNetworkName          = dockerLabelNetworkPrefix + "name"
-	dockerLabelNetworkScope         = dockerLabelNetworkPrefix + "scope"
-	dockerLabelNetworkInternal      = dockerLabelNetworkPrefix + "internal"
-	dockerLabelNetworkIngress       = dockerLabelNetworkPrefix + "ingress"
 	dockerLabelNetworkIP            = dockerLabelNetworkPrefix + "ip"
 	dockerLabelPortPrefix           = dockerLabel + "port_"
 	dockerLabelPortPrivate          = dockerLabelPortPrefix + "private"
 	dockerLabelPortPublic           = dockerLabelPortPrefix + "public"
 )
 
-// DefaultSDConfig is the default Docker Swarm SD configuration.
+// DefaultDockerSDConfig is the default Docker SD configuration.
 var DefaultDockerSDConfig = DockerSDConfig{
 	RefreshInterval:  model.Duration(60 * time.Second),
 	Port:             80,
@@ -52,6 +60,7 @@ func init() {
 	discovery.RegisterConfig(&DockerSDConfig{})
 }
 
+// DockerSDConfig is the configuration for Docker (non-swarm) based service discovery.
 type DockerSDConfig struct {
 	HTTPClientConfig config.HTTPClientConfig `yaml:",inline"`
 
@@ -99,7 +108,7 @@ type DockerDiscovery struct {
 	filters filters.Args
 }
 
-// NewDiscovery returns a new Discovery which periodically refreshes its targets.
+// NewDockerDiscovery returns a new DockerDiscovery which periodically refreshes its targets.
 func NewDockerDiscovery(conf *DockerSDConfig, logger log.Logger) (*DockerDiscovery, error) {
 	var err error
 
